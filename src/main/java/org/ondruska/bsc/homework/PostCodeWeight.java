@@ -6,8 +6,7 @@ import java.text.NumberFormat;
 import java.util.Comparator;
 
 /**
- *
- * @author ondruska
+ * Post code and weight encapsulation. Immutable.
  */
 public class PostCodeWeight implements Comparable<PostCodeWeight> {
 
@@ -17,6 +16,14 @@ public class PostCodeWeight implements Comparable<PostCodeWeight> {
   public PostCodeWeight(String postCode, BigDecimal weight) {
     this.postCode = postCode;
     this.weight = weight;
+  }
+
+  public String getPostCode() {
+    return postCode;
+  }
+
+  public BigDecimal getWeight() {
+    return weight;
   }
 
   private static final NumberFormat DF = new DecimalFormat("0.000");
