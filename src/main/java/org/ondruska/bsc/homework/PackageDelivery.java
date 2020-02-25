@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -62,7 +63,7 @@ public class PackageDelivery {
         } else if (!POSTCODE_PATTERN.matcher(postCode).matches()) {
           System.err.println("post code must be exactly 5 digits");
         } else {
-          db.store(postCode, weight);
+          db.store(new PostCodeWeight(postCode, weight));
         }
 
       } catch (Exception e) {
@@ -93,9 +94,18 @@ public class PackageDelivery {
     timer.scheduleAtFixedRate(new TimerTask() {
       @Override
       public void run() {
-        System.out.print(db.list());
+        System.out.print(format(db.list()));
       }
     }, 0, seconds * 1000);
+
+  }
+
+  private static String format(List<PostCodeWeight> list) {
+    
+    StringBuilder sb = new StringBuilder();
+    list.forEach(sb::append);
+    
+    return sb.toString();
 
   }
 

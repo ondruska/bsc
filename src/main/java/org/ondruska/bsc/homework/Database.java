@@ -15,12 +15,11 @@ public class Database {
 
   /**
    * Store package information.
-   *
-   * @param postCode destination postal code
-   * @param weight package weight
+   * 
+   * @param pcw post code and weight
    */
-  public void store(String postCode, BigDecimal weight) {
-    database.compute(postCode, (k, v) -> v == null ? weight : v.add(weight));
+  public void store(PostCodeWeight pcw) {
+    database.compute(pcw.getPostCode(), (k, v) -> v == null ? pcw.getWeight() : v.add(pcw.getWeight()));
   }
 
   /**
@@ -30,7 +29,7 @@ public class Database {
    *
    * @return output data
    */
-  public String list() {
+  public List<PostCodeWeight> list() {
     
     List<PostCodeWeight> result = new ArrayList<>(database.size());
     
@@ -40,10 +39,8 @@ public class Database {
     
     result.sort(null);
     
-    StringBuffer sb = new StringBuffer();
-    result.forEach(sb::append);
-    
-    return sb.toString();
+    return result;
+
   }
 
 }
